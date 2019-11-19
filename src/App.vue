@@ -44,7 +44,9 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import HelloWorld from './components/HelloWorld'
+
+const fs = require('fs')
 
 export default {
   name: 'App',
@@ -56,5 +58,10 @@ export default {
   data: () => ({
     //
   }),
+
+  mounted () {
+    const homedir = require('os').homedir()
+    console.log(fs.readdirSync(homedir))
+  }
 };
 </script>
