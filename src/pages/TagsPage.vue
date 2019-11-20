@@ -2,23 +2,48 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <v-btn @click="addTag">
-          <v-icon left>mdi-plus-circle</v-icon>
-          Tag
-        </v-btn>
+        <tag-form>
+          <template #default="{ on }">
+            <v-btn v-on="on">
+              <v-icon left>mdi-plus-circle</v-icon>
+              Tag
+            </v-btn>
+          </template>
+        </tag-form>
       </v-col>
       <v-col cols="12">
         <v-data-table
           :headers="headers"
           :items="tags"
         >
-          <template #item.color="{ item }">
-            <v-avatar
+          <template #item.name="{ item }">
+            <v-chip
               :color="item.color"
-              size="36"
+              class="white--text"
             >
-              {{ item.color }}
-            </v-avatar>
+              {{ item.name }}
+            </v-chip>
+          </template>
+          <template #item.actions="{ item }">
+            <tag-form
+              :record="item"
+              color="orange"
+            >
+              <template #default="{ on }">
+                <v-btn
+                  v-on="on"
+                  icon
+                >
+                  <v-icon color="orange">mdi-pencil</v-icon>
+                </v-btn>
+              </template>
+            </tag-form>
+            <v-btn
+              icon
+              @click="deleteTag(item)"
+            >
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
           </template>
         </v-data-table>
       </v-col>
@@ -29,12 +54,16 @@
 <script>
   import { Component, Vue } from 'vue-property-decorator'
   import Tag from '@/models/Tag'
+  import TagForm from '@/components/TagForm'
 
-  @Component
+  @Component({
+    components: {
+      TagForm
+    }
+  })
   export default class TagsPage extends Vue {
     headers = [
       { text: 'Name', value: 'name' },
-      { text: 'Color', value: 'color', align: 'center' },
       { text: 'Description', value: 'description' },
       { text: 'Actions', value: 'actions', align: 'right' }
     ]
@@ -47,10 +76,8 @@
       console.log(this.tags)
     }
 
-    addTag () {
-      Tag.insert({
-        data: { id: 1, name: 'Tag', description: 'New tag!', color: '#333' }
-      })
+    deleteTag (tag) {
+      Tag.delete(tag.id)
     }
   }
 </script>
