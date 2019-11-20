@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HomePage from '@/pages/HomePage'
+import BrowsePage from '@/pages/BrowsePage'
 import TagsPage from '@/pages/TagsPage'
 
 Vue.use(Router)
@@ -8,9 +8,9 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'Home',
-      component: HomePage
+      path: '/browse',
+      name: 'Browse',
+      component: BrowsePage
     },
     {
       path: '/tags',
