@@ -19,7 +19,7 @@
           <template #item.name="{ item }">
             <v-chip
               :color="item.color"
-              class="white--text"
+              dark
             >
               {{ item.name }}
             </v-chip>
