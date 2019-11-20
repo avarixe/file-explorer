@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VuexORM from '@vuex-orm/core'
-import Tag from '@/models/Tag'
-import FolderTag from '@/models/FolderTag'
+import Tag from '../models/Tag'
+import FolderTag from '../models/FolderTag'
 import {
   createPersistedState,
   createSharedMutations

@@ -16,59 +16,64 @@
       </v-col>
     </v-row>
 
-    <v-row dense>
-      <v-col
-        cols="12"
-        sm="4"
-        md="3"
-        lg="2"
-      >
-        <v-list-item
-          style="height: 100%"
-          @click="goBack"
+    <template v-if="mode === 'grid'">
+      <v-row dense>
+        <v-col
+          cols="12"
+          sm="4"
+          md="3"
+          lg="2"
         >
-          <v-list-item-avatar>
-            <v-icon>mdi-arrow-up</v-icon>
-          </v-list-item-avatar>
-          <v-list-item-content>
-            <v-list-item-title>..</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-col>
-      <v-col
-        v-for="(folder, i) in folders"
-        :key="i"
-        cols="12"
-        sm="4"
-        md="3"
-        lg="2"
-      >
-        <v-tooltip bottom>
-          <template #activator="{ on }">
-            <v-list-item v-on="on" @click="openFolder(folder)">
-              <v-list-item-avatar>
-                <v-icon>mdi-folder</v-icon>
-              </v-list-item-avatar>
-              <v-list-item-content>
-                <v-list-item-title>{{ folder.fileName }}</v-list-item-title>
-                <v-list-item-subtitle>
-                  <v-chip
-                    v-for="tag in folderTags(folder)"
-                    :key="tag.id"
-                    :color="tag.color"
-                    x-small
-                    dark
-                  >
-                    {{ tag.name }}
-                  </v-chip>
-                </v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-          </template>
-          {{ folder.fileName }}
-        </v-tooltip>
-      </v-col>
-    </v-row>
+          <v-list-item
+            style="height: 100%"
+            @click="goBack"
+          >
+            <v-list-item-avatar>
+              <v-icon>mdi-arrow-up</v-icon>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title>..</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-col>
+        <v-col
+          v-for="(folder, i) in folders"
+          :key="i"
+          cols="12"
+          sm="4"
+          md="3"
+          lg="2"
+        >
+          <v-tooltip bottom>
+            <template #activator="{ on }">
+              <v-list-item v-on="on" @click="openFolder(folder)">
+                <v-list-item-avatar>
+                  <v-icon>mdi-folder</v-icon>
+                </v-list-item-avatar>
+                <v-list-item-content>
+                  <v-list-item-title>{{ folder.fileName }}</v-list-item-title>
+                  <v-list-item-subtitle>
+                    <v-chip
+                      v-for="tag in folderTags(folder)"
+                      :key="tag.id"
+                      :color="tag.color"
+                      x-small
+                      dark
+                    >
+                      {{ tag.name }}
+                    </v-chip>
+                  </v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </template>
+            {{ folder.fileName }}
+          </v-tooltip>
+        </v-col>
+      </v-row>
+    </template>
+    <template v-else-if="mode === 'list'">
+      <folder-list :folders="folders" />
+    </template>
   </v-container>
 </template>
 
@@ -77,11 +82,17 @@
   import { State, Action } from 'vuex-class'
   import walkFolders from '@/plugins/walkFolders'
   import FolderTag from '@/models/FolderTag'
+  import FolderList from '@/components/FolderList'
 
   const path = require('path')
 
-  @Component
+  @Component({
+    components: {
+      FolderList
+    }
+  })
   export default class BrowsePage extends Vue {
+    @State mode
     @State path
     @Action('SET_PATH') setPath
 

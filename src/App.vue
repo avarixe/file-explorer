@@ -28,7 +28,7 @@
           <v-list-item-title>Browse</v-list-item-title>
         </v-list-item>
 
-<!--         <template v-if="$route.name === 'Browse'">
+        <template v-if="$route.name === 'Browse'">
           <v-list-item>
             <v-radio-group
               row
@@ -40,7 +40,7 @@
               <v-radio label="List" value="list" />
             </v-radio-group>
           </v-list-item>
-        </template> -->
+        </template>
 
         <v-list-item
           to="/tags"
