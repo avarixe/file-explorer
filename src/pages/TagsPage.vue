@@ -27,31 +27,30 @@
 </template>
 
 <script>
+  import { Component, Vue } from 'vue-property-decorator'
   import Tag from '@/models/Tag'
 
-  export default {
-    data: () => ({
-      headers: [
-        { text: 'Name', value: 'name' },
-        { text: 'Color', value: 'color', align: 'center' },
-        { text: 'Description', value: 'description' },
-        { text: 'Actions', value: 'actions', align: 'right' }
-      ]
-    }),
-    computed: {
-      tags () {
-        return Tag.all()
-      }
-    },
+  @Component
+  export default class TagsPage extends Vue {
+    headers = [
+      { text: 'Name', value: 'name' },
+      { text: 'Color', value: 'color', align: 'center' },
+      { text: 'Description', value: 'description' },
+      { text: 'Actions', value: 'actions', align: 'right' }
+    ]
+
+    get tags () {
+      return Tag.all()
+    }
+
     mounted () {
       console.log(this.tags)
-    },
-    methods: {
-      addTag () {
-        Tag.insert({
-          data: { id: 1, name: 'Tag', description: 'New tag!', color: '#333' }
-        })
-      }
+    }
+
+    addTag () {
+      Tag.insert({
+        data: { id: 1, name: 'Tag', description: 'New tag!', color: '#333' }
+      })
     }
   }
 </script>

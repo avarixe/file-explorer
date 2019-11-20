@@ -33,32 +33,30 @@
 </template>
 
 <script>
+  import { Vue, Component } from 'vue-property-decorator'
   import Tag from '@/models/Tag'
   import DialogForm from '@/helpers/DialogForm'
 
-  export default {
-    data: () => ({
-      dialog: false,
-      tag: {
-        name: null,
-        color: null,
-        description: null
-      }
-    }),
-    computed: {
-      title () {
-        return 'New Tag'
-      }
-    },
-    methods: {
-      async submit () {
-        const lastTag = Tag.query().orderBy('id').last()
-        const id = lastTag ? lastTag.id + 1 : 1
+  @Component
+  export default class TagForm extends Vue {
+    dialog = false
+    tag = {
+      name: null,
+      color: null,
+      description: null
+    }
 
-        Tag.insert({
-          data: { id, ...tag }
-        })
-      }
+    get title () {
+      return 'New Tag'
+    }
+
+    async submit () {
+      const lastTag = Tag.query().orderBy('id').last()
+      const id = lastTag ? lastTag.id + 1 : 1
+
+      Tag.insert({
+        data: { id, ...tag }
+      })
     }
   }
 </script>

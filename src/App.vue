@@ -19,19 +19,15 @@
 </template>
 
 <script>
+  import { Vue, Component } from 'vue-property-decorator'
+
   const fs = require('fs')
 
   const homedir = require('os').homedir()
   console.log(fs.readdirSync(homedir))
 
-  export default {
-    name: 'App',
-
-    components: {
-    },
-
-    data: () => ({
-      dir: homedir
-    })
+  @Component
+  export default class App extends Vue {
+    dir = homedir
   }
 </script>
