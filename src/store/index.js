@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import VuexORM from '@vuex-orm/core'
+import Tag from '../models/Tag'
 import {
   createPersistedState,
   createSharedMutations
@@ -7,8 +9,13 @@ import {
 
 Vue.use(Vuex)
 
+const database = new VuexORM.Database()
+
+database.register(Tag)
+
 export default new Vuex.Store({
   plugins: [
+    VuexORM.install(database),
     createPersistedState(),
     createSharedMutations()
   ]
