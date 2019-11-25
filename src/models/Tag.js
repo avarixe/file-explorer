@@ -8,7 +8,7 @@ export default class Tag extends Model {
 
   static fields () {
     return {
-      id: this.attr(null),
+      id: this.uid(),
       name: this.attr(''),
       color: this.attr(''),
       description: this.attr(''),

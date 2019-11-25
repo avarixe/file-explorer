@@ -8,7 +8,7 @@ export default class FolderTag extends Model {
 
   static fields () {
     return {
-      id: this.attr(null),
+      id: this.uid(),
       name: this.attr(''),
       tag_id: this.attr(''),
 

@@ -118,11 +118,6 @@
     }
 
     async submit () {
-      if (!this.tag.id) {
-        const lastTag = Tag.query().orderBy('id').last()
-        this.tag.id = lastTag ? lastTag.id + 1 : 1
-      }
-
       Tag.insert({ data: this.tag })
     }
   }

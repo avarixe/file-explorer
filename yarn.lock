@@ -1085,13 +1085,13 @@
   resolved "https://registry.yarnpkg.com/@vue/web-component-wrapper/-/web-component-wrapper-1.2.0.tgz#bb0e46f1585a7e289b4ee6067dcc5a6ae62f1dd1"
   integrity sha512-Xn/+vdm9CjuC9p3Ae+lTClNutrVhsXpzxvoTXXtoys6kVRX9FkueSUAqSWAyZntmVLlR4DosBV4pH8y5Z/HbUw==
 
-"@vuex-orm/core@^0.33.0":
-  version "0.33.0"
-  resolved "https://registry.yarnpkg.com/@vuex-orm/core/-/core-0.33.0.tgz#8daa56114bc3fc22d707d228923ad2ba8b51c425"
-  integrity sha512-1Z9dqPHoVRHE/YfcOGHY2aRF+1uNwzGztIxYWe4eM649ZUF36IE2+rIpGf/CqWHFIZrJtoSh9R0AjCBDzy6s7w==
+"@vuex-orm/core@^0.34.0":
+  version "0.34.0"
+  resolved "https://registry.yarnpkg.com/@vuex-orm/core/-/core-0.34.0.tgz#f4298f783f013e75d11739def3b572f805fb8cc0"
+  integrity sha512-2TYcHCuqhstMueFMnZVovCljj6vc9RklEc8UBTD8mxTyEmvE9DSSAkQLiMzmeFJJ3joWhDTX+0y5x5ICO20bOw==
   dependencies:
     normalizr "^3.4.1"
-    vuex "^3.1.1"
+    vuex "^3.1.2"
 
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
@@ -9438,7 +9438,7 @@ vuex-electron@^1.0.3:
     deepmerge "^2.1.1"
     electron-store "^2.0.0"
 
-vuex@^3.1.1, vuex@^3.1.2:
+vuex@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.1.2.tgz#a2863f4005aa73f2587e55c3fadf3f01f69c7d4d"
   integrity sha512-ha3jNLJqNhhrAemDXcmMJMKf1Zu4sybMPr9KxJIuOpVcsDQlTBYLLladav2U+g1AvdYDG5Gs0xBTb0M5pXXYFQ==
