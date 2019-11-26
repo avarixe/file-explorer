@@ -1,16 +1,15 @@
 import { Model } from '@vuex-orm/core'
 
-export default class Tag extends Model {
+export default class Folder extends Model {
   static get entity () {
-    return 'tags'
+    return 'folders'
   }
 
   static fields () {
     return {
       id: this.uid(),
       name: this.attr(''),
-      color: this.attr(''),
-      description: this.attr('')
+      tags: this.attr([])
     }
   }
 }

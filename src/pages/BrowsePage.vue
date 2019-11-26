@@ -74,6 +74,52 @@
     <template v-else-if="mode === 'list'">
       <folder-list :folders="folders" />
     </template>
+
+    <v-row>
+      <v-col cols="12">
+        <v-card dense>
+          <v-toolbar
+            color="primary"
+            dark
+            dense
+          >
+            Folder Settings
+          </v-toolbar>
+          <v-card-text>
+            <v-autocomplete
+              :value="tags"
+              :items="allTags"
+              label="Tags"
+              prepend-icon="mdi-tag"
+              hide-details
+              multiple
+              @input="updateTags"
+            >
+              <template #selection="{ item }">
+                <v-chip
+                  :color="item.color"
+                  small
+                  dark
+                  close
+                  @click:close="removeTag(item)"
+                >
+                  {{ item.name }}
+                </v-chip>
+              </template>
+              <template #item="{ item }">
+                <v-icon
+                  :color="item.color"
+                  left
+                >
+                  mdi-circle
+                </v-icon>
+                {{ item.name }}
+              </template>
+            </v-autocomplete>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -81,7 +127,8 @@
   import { Vue, Component } from 'vue-property-decorator'
   import { State, Action } from 'vuex-class'
   import walkFolders from '@/plugins/walkFolders'
-  import FolderTag from '@/models/FolderTag'
+  import Folder from '@/models/Folder'
+  import Tag from '@/models/Tag'
   import FolderList from '@/components/FolderList'
 
   const path = require('path')
@@ -119,6 +166,20 @@
       return folders
     }
 
+    get currentFolder () {
+      return Folder.query().where('name', this.path).first()
+    }
+
+    get tags () {
+      return this.currentFolder
+        ? Tag.query().where(tag => this.currentFolder.tags.indexOf(tag.name) > -1).all()
+        : []
+    }
+
+    get allTags () {
+      return Tag.all()
+    }
+
     goBack () {
       let directories = this.path.split(path.sep)
       const currentDir = directories.pop()
@@ -133,13 +194,32 @@
       this.setPath(folder.rootDir + path.sep + folder.fileName)
     }
 
-    folderTags (folder) {
-      return FolderTag
+    folderTags (dir) {
+      const folder = Folder
         .query()
-        .with('tag')
-        .where('name', folder.rootDir + path.sep + folder.fileName)
-        .all()
-        .map(folder => folder.tag)
+        .where('name', dir.rootDir + path.sep + dir.fileName)
+        .first()
+      return folder
+        ? Tag.query().where(tag => folder.tags.indexOf(tag.name) > -1).all()
+        : []
+    }
+
+    updateTags (tags) {
+      if (this.currentFolder) {
+        console.log('currentFolder present!')
+        Folder.insert({
+          data: { ...this.currentFolder, tags: tags.map(tag => tag.name) }
+        })
+      } else {
+        console.log('no currentFolder!', this.path, tags.map(tag => tag.name))
+        Folder.insert({
+          data: { name: this.path, tags: tags.map(tag => tag.name) }
+        })
+      }
+    }
+
+    removeTag (removedTag) {
+      this.updateTags(this.tags.filter(tag => tag.id !== removedTag.id))
     }
   }
 </script>
